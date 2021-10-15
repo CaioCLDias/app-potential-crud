@@ -1,0 +1,91 @@
+<h1 class="mt-4">Desenvolvedores</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Consulta</li>
+</ol>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert" *ngIf="message">
+                {{ message }}
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="error">
+                {{ error }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-warning" (click)="newDev()">
+                <i class="fas fa-user-plus"></i> Novo
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="input-group mb-3">
+        <input type="text" 
+               [(ngModel)]="nome" 
+               name="nome" class="form-control" 
+               placeholder="Pesquisar por nome, se o campo estiver vazio lista todos os devs"
+               aria-label="Recipient's username" 
+               aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" (click)="consultar()">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Idade</th>
+                        <th>Data Nascimento</th>
+                        <th>Sexo</th>
+                        <th>Hobby</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let dev of devs">
+                        <td>{{ dev.id }}</td>
+                        <td>{{ dev.nome }}</td>
+                        <td>{{ dev.idade }}</td>
+                        <td>{{ dev.dataNascimento }}</td>
+                        <td>{{ dev.sexo }}</td>
+                        <td>{{ dev.hobby }}</td>
+                        <td>
+                            <button class="btn btn-primary" routerLink="/developers-form/{{ dev.id }}">
+                                <i class="fas fa-pen"></i>
+                            </button>
+                            <button class="btn btn-danger ml-2 " data-toggle="modal" data-target="#modalDel"
+                                (click)="getDev(dev)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="modalDel" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Excluir</h4>
+                </div>
+                <div class="modal-body" *ngIf="dev">
+                    Gostaria de Excluir o Dev: {{ dev.nome }} ?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" data-dismiss="modal" (click)="deleteDev()">
+                        <i class="fas fa-check"></i> Confirmar
+                    </button>
+                    <button class="btn btn-outline-danger" data-dismiss="modal">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
